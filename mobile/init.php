@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2015 SongPhi
+ * Copyright (c) 2015 thaolt@songphi.com
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
@@ -13,18 +13,13 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations
  * under the License.
- */
+ **/
 
 if (!defined('DS')) define('DS',DIRECTORY_SEPARATOR);
 define('OWMYCOOKIE_DIR_ROOT', dirname(__FILE__));
 define('OWMYCOOKIE_DIR_USERFILES', OW::getPluginManager()->getPlugin('owmycookie')->getUserFilesDir());
 define('OWMYCOOKIE_DIR_PLUGINFILES', OW::getPluginManager()->getPlugin('owmycookie')->getPluginFilesDir());
 define('OWMYCOOKIE_DIR_STATICURL', OW::getPluginManager()->getPlugin('owmycookie')->getStaticUrl());
-
-// Routers declaration
-OW::getRouter()->addRoute(new OW_Route('owmycookie.admin', 'admin/plugins/owmycookie', 'OWMYCOOKIE_CTRL_Admin', 'index'));
-
-OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_help', 'admin/plugins/owmycookie/help', 'OWMYCOOKIE_CTRL_Admin', 'help'));
 
 $eventHandler = new OWMYCOOKIE_CLASS_EventHandler();
 
