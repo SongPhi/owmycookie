@@ -1,0 +1,34 @@
+{
+  "name": "owmycookie",
+  "version": "1.0.0",
+  "homepage": "https://github.com/SongPhi/owmycookie",
+  "authors": [
+    "Thao Le <thaolt@songphi.com>"
+  ],
+  "description": "OwMyCookie (Cookie Consent) is an Oxwall plugin that Get your website to comply with the EU cookie law.",
+  "main": "plugin.xml",
+  "moduleType": [],
+  "keywords": [
+    "oxwall",
+    "plugin",
+    "cookie",
+    "consent",
+    "eu",
+    "european",
+    "union",
+    "law",
+    "comply",
+    "compliance"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "cookieconsent2": "~1.0.6"
+  }
+}
