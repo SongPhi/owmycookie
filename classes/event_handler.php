@@ -30,7 +30,7 @@ class OWMYCOOKIE_CLASS_EventHandler
 		$language = OW::getLanguage();
 
 		$text = array(
-			'learnMore' => $language->text('owmycookie','learn_more'),
+			'learn_more' => $language->text('owmycookie','learn_more'),
 			'dismiss' => $language->text('owmycookie','dismiss'),
 			'message' => $language->text('owmycookie','message'),
 		);
@@ -40,13 +40,13 @@ class OWMYCOOKIE_CLASS_EventHandler
         OW::getDocument()->addScriptDeclaration(<<<JSCRIPT
     window.cookieconsent_options = {
     	theme: '{$configs->get('theme')}',
-        learnMore: 'More info',
-        dismiss: 'Got it!',
-        message: 'This website uses cookies to ensure you get the best experience on our website',
+        learnMore: '{$text['learn_more']}',
+        dismiss: '{$text['dismiss']}',
+        message: '{$text['message']}',
         link: '{$configs->get('link')}'
     };
 JSCRIPT
 );
-        
+
 	}
 }

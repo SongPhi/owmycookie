@@ -38,6 +38,26 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
     function index() {
         $language = OW::getLanguage();
         $this->setPageHeading('');
+
+        OW::getDocument()->addScript( OW::getPluginManager()->getPlugin('admin')->getStaticUrl() . 'js/theme_select.js');
+
+        $themeData = array(
+            'a' => 'b'
+        );
+
+        $langData = array(
+            'a' => 'b'
+        );
+
+        $themeData = json_encode($themeData);
+
+        $langData = json_encode($langData);
+
+        OW::getDocument()->addScriptDeclaration(<<<JSCRIPT
+    window.cookieconsent_theme = new ThemesSelect({$themeData},{$langData});
+JSCRIPT
+);
+
     }
     
     function getMenu() {
