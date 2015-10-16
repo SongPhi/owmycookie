@@ -19,10 +19,12 @@ if (!defined('DS')) define('DS',DIRECTORY_SEPARATOR);
 define('OWMYCOOKIE_DIR_ROOT', dirname(__FILE__));
 define('OWMYCOOKIE_DIR_USERFILES', OW::getPluginManager()->getPlugin('owmycookie')->getUserFilesDir());
 define('OWMYCOOKIE_DIR_PLUGINFILES', OW::getPluginManager()->getPlugin('owmycookie')->getPluginFilesDir());
-define('OWMYCOOKIE_DIR_STATICURL', OW::getPluginManager()->getPlugin('owmycookie')->getStaticUrl());
+define('OWMYCOOKIE_URL_STATIC', OW::getPluginManager()->getPlugin('owmycookie')->getStaticUrl());
 
 // Routers declaration
 OW::getRouter()->addRoute(new OW_Route('owmycookie.admin', 'admin/plugins/owmycookie', 'OWMYCOOKIE_CTRL_Admin', 'index'));
+
+OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_appearance', 'admin/plugins/owmycookie/appearance', 'OWMYCOOKIE_CTRL_Admin', 'appearance'));
 
 OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_help', 'admin/plugins/owmycookie/help', 'OWMYCOOKIE_CTRL_Admin', 'help'));
 

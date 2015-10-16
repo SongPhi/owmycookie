@@ -19,14 +19,28 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
 {
     
     private $menu = null;
+
+    private $themes = array(
+        'dark-bottom',
+        'dark-floating',
+        'dark-floating-tada' => array(
+            'icon' => 'dark-floating',
+            'preview' => 'dark-floating',
+            'desc' => 'dark-floating with tada special effect'
+        ),
+        'dark-top',
+        'light-bottom',
+        'light-top',
+        'light-floating',
+    );
     
-    function __construct() {
+    public function __construct() {
         $this->menu = $this->getMenu();
         $this->addComponent('menu', $this->menu);
         parent::__construct();
     }
     
-    function setPageHeading($heading) {
+    public function setPageHeading($heading) {
     	if (strlen($heading)>0)
         	$heading = 'Cookie Consent :: ' . $heading;
         else
@@ -35,32 +49,64 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
         return parent::setPageHeading($heading);
     }
     
-    function index() {
+    public function index() {
         $language = OW::getLanguage();
         $this->setPageHeading('');
 
+    }
+
+    public function appearance() {
+        $language = OW::getLanguage();
+        $this->setPageHeading($language->text('owmycookie','setting_appearance'));
+
         OW::getDocument()->addScript( OW::getPluginManager()->getPlugin('admin')->getStaticUrl() . 'js/theme_select.js');
 
-        $themeData = array(
-            'a' => 'b'
-        );
+        $themesInfo = array();
 
         $langData = array(
-            'a' => 'b'
+            'deleteConfirmMsg' => $language->text('admin', 'themes_choose_delete_confirm_msg'),
+            'deleteActiveThemeMsg' => $language->text('admin', 'themes_cant_delete_active_theme')
         );
 
-        $themeData = json_encode($themeData);
+        foreach ($variable as $key => $value) {
+            # code...
+        }
+
+        /* @var $theme BOL_Theme */
+        foreach ( $this->themes as $key => $theme)
+        {
+            if (!is_array($theme)) {
+                $key = $theme;
+                $theme = array();
+                $theme['icon'] = $key;
+                $theme['preview'] = $key;
+                $theme['desc'] = $key;
+            }
+
+            $themesInfo[$key]['description'] = '';
+            $themesInfo[$key]['key'] = $key;
+            $themesInfo[$key]['title'] = $key;
+            $themesInfo[$key]['iconUrl'] = OWMYCOOKIE_BOL_Service::getInstance()->getImgUrl('themeicons/'.$theme['icon'].'.png');
+            $themesInfo[$key]['previewUrl'] = OWMYCOOKIE_BOL_Service::getInstance()->getImgUrl('themeicons/'.$theme['preview'].'.png');
+            $themesInfo[$key]['active'] = false;
+            $themesInfo[$key]['changeUrl'] = '';
+            $themesInfo[$key]['update_url'] = '';            
+        }
+
+        $this->assign('themesInfo',$themesInfo);
+        $themesInfo = json_encode($themesInfo);
 
         $langData = json_encode($langData);
 
-        OW::getDocument()->addScriptDeclaration(<<<JSCRIPT
-    window.cookieconsent_theme = new ThemesSelect({$themeData},{$langData});
-JSCRIPT
-);
+        OW::getDocument()->addOnloadScript(<<<JSCRIPT
 
+        window.cookieconsent_theme = new ThemesSelect({$themesInfo},{$langData});
+
+JSCRIPT
+        );
     }
     
-    function getMenu() {
+    private function getMenu() {
         $language = OW::getLanguage();
         
         $menu = new BASE_CMP_ContentMenu();
@@ -69,9 +115,17 @@ JSCRIPT
         $item = new BASE_MenuItem();
         $item->setLabel($language->text('owmycookie', 'adm_menu_settings'));
         $item->setUrl(OW::getRouter()->urlForRoute('owmycookie.admin'));
-        $item->setKey('tweaks');
+        $item->setKey('setting');
         $item->setIconClass('ow_ic_gear_wheel');
         $item->setOrder(0);
+        $menuItems[] = $item;
+
+        $item = new BASE_MenuItem();
+        $item->setLabel($language->text('owmycookie', 'adm_menu_appearance'));
+        $item->setUrl(OW::getRouter()->urlForRoute('owmycookie.admin_appearance'));
+        $item->setKey('appearance');
+        $item->setIconClass('ow_ic_monitor');
+        $item->setOrder(1);
         $menuItems[] = $item;
         
         $item = new BASE_MenuItem();
@@ -79,7 +133,7 @@ JSCRIPT
         $item->setUrl(OW::getRouter()->urlForRoute('owmycookie.admin_help'));
         $item->setKey('help');
         $item->setIconClass('ow_ic_help');
-        $item->setOrder(1);
+        $item->setOrder(2);
         $menuItems[] = $item;
         
         $menu->setMenuItems($menuItems);
@@ -88,7 +142,7 @@ JSCRIPT
         return $menu;
     }
     
-    function help() {
+    public function help() {
         $language = OW::getLanguage();
         $this->setPageHeading($language->text('owmycookie', 'adm_menu_help'));
     }
@@ -99,4 +153,51 @@ JSCRIPT
         die('aaa');
     }
 }
+
+
+
+/**
+ * Save Configurations form class
+ */
+class OWMYCOOKIE_ConfigForm extends Form
+{
+
+    /**
+     * Class constructor
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct('configForm');
+
+        $language = OW::getLanguage();
+
+        // player width Field
+        $linkField = new TextField('link');
+        $linkField->addValidator($wValidator);
+        $this->addElement($linkField);        
+
+        // submit
+        $submit = new Submit('save');
+        $submit->setValue($language->text('owmycookie', 'btn_save'));
+        $this->addElement($submit);
+    }
+
+    /**
+     * Updates video plugin configuration
+     *
+     * @return boolean
+     */
+    public function process()
+    {
+        $values = $this->getValues();
+
+        $config = OWMYCOOKIE_BOL_Configs::getInstance();
+
+        $config->set('link',$values['link']);
+
+        return array('result' => true);
+    }
+}
+
 

@@ -1,0 +1,78 @@
+{*
+ * Copyright (c) 2015 thaolt@songphi.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *}
+
+
+{$menu}
+
+<div class="ow_admin_choose_theme">
+
+
+	<div class="selected_theme_info">
+		<div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 402px;"><div class="selected_theme_info_stick">
+			<div class="ow_box_cap_empty">
+				<div class="ow_box_cap_right">
+					<div class="ow_box_cap_body">
+						<h3 class="ow_ic_info">Theme Info</h3>
+					</div>
+				</div>
+			</div>
+			<div class="ow_box_empty ow_stdmargin ow_break_word">
+
+
+			<div class="themes_preview">
+			    <div class="theme_wrap"><a class="theme_icon"></a></div>
+			    <div class="theme_text_wrap">
+			        <div class="theme_title"></div>
+			        <div class="theme_desc"></div>
+			    </div>
+			</div>
+			    <div class="theme_info">
+			        <div class="clearfix"><div class="ow_right theme_control_button ow_btn_delimiter">
+					{decorator name='button' class='theme_select_submit ow_positive' langLabel='admin+themes_choose_activate_button_label'}
+			        </div></div>
+					</div>
+
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="theme_thumbs">
+		{block_decorator name='box' type='empty' addClass='ow_stdmargin' iconClass="ow_ic_monitor" langLabel='admin+themes_choose_list_cap_title'}
+			<div class="themes_select clearfix">
+				{foreach from=$themesInfo item='theme'}
+					<div class="theme_item">
+						<a class="theme_icon {$theme.key}" href="javascript://" style="background-image:url({$theme.iconUrl}); background-size:auto 90%;">
+							<span class="fake"></span>
+							<span class="name">{$theme.title}</span>
+						</a>
+					    
+					</div>
+				{/foreach}
+			</div>
+		{/block_decorator}
+	</div>
+
+
+</div>
+
+<style type="text/css">
+.theme_icon {
+	background-size: contain;
+    background-position: center center !important;
+    cursor: default !important;
+}
+</style>

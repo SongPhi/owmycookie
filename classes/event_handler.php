@@ -35,7 +35,7 @@ class OWMYCOOKIE_CLASS_EventHandler
 			'message' => $language->text('owmycookie','message'),
 		);
 
-        OW::getDocument()->addScript( OWMYCOOKIE_DIR_STATICURL . 'bower_components/cookieconsent2/cookieconsent.js');
+        OW::getDocument()->addScript( OWMYCOOKIE_URL_STATIC . 'bower_components/cookieconsent2/cookieconsent.js');
 
         OW::getDocument()->addScriptDeclaration(<<<JSCRIPT
     window.cookieconsent_options = {

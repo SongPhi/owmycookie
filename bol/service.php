@@ -18,7 +18,7 @@
 /**
 * 
 */
-class SPVIDEOLITE_BOL_Service
+class OWMYCOOKIE_BOL_Service
 {
   const PLUGIN_NAME = 'owmycookie';
   const PLUGIN_VER = 'v1.0.0';
@@ -40,6 +40,10 @@ class SPVIDEOLITE_BOL_Service
 
   public static function getJsUrl($filename) {
     return self::getPlugin()->getStaticJsUrl() . $filename . '.js';
+  }
+
+  public static function getImgUrl($filename) {
+    return self::getPlugin()->getStaticUrl() . 'img/' . $filename;
   }
 
   public static function getCssUrl($filename) {
