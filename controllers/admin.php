@@ -55,6 +55,17 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
 
     }
 
+    public function activate( array $params ) {
+        $theme = $params['theme'];
+        $language = OW::getLanguage();
+        
+        OWMYCOOKIE_BOL_Configs::getInstance()->set('theme',$theme);
+        
+        OW::getFeedback()->info($language->text('owmycookie', 'theme_changed'));
+        
+        $this->redirect(OW::getRouter()->urlForRoute('owmycookie.admin_appearance'));
+    }
+
     public function appearance() {
         $language = OW::getLanguage();
         $this->setPageHeading($language->text('owmycookie','setting_appearance'));
@@ -68,11 +79,6 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
             'deleteActiveThemeMsg' => $language->text('admin', 'themes_cant_delete_active_theme')
         );
 
-        foreach ($variable as $key => $value) {
-            # code...
-        }
-
-        /* @var $theme BOL_Theme */
         foreach ( $this->themes as $key => $theme)
         {
             if (!is_array($theme)) {
@@ -89,7 +95,9 @@ class OWMYCOOKIE_CTRL_Admin extends ADMIN_CTRL_Abstract
             $themesInfo[$key]['iconUrl'] = OWMYCOOKIE_BOL_Service::getInstance()->getImgUrl('themeicons/'.$theme['icon'].'.png');
             $themesInfo[$key]['previewUrl'] = OWMYCOOKIE_BOL_Service::getInstance()->getImgUrl('themeicons/'.$theme['preview'].'.png');
             $themesInfo[$key]['active'] = false;
-            $themesInfo[$key]['changeUrl'] = '';
+            $themesInfo[$key]['changeUrl'] = OW::getRouter()->urlFor(
+                'OWMYCOOKIE_CTRL_Admin', 
+                'activate',array('theme'=>$key));
             $themesInfo[$key]['update_url'] = '';            
         }
 

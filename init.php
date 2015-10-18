@@ -25,6 +25,7 @@ define('OWMYCOOKIE_URL_STATIC', OW::getPluginManager()->getPlugin('owmycookie')-
 OW::getRouter()->addRoute(new OW_Route('owmycookie.admin', 'admin/plugins/owmycookie', 'OWMYCOOKIE_CTRL_Admin', 'index'));
 
 OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_appearance', 'admin/plugins/owmycookie/appearance', 'OWMYCOOKIE_CTRL_Admin', 'appearance'));
+OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_activatetheme', 'admin/plugins/owmycookie/appearance/activate/:theme', 'OWMYCOOKIE_CTRL_Admin', 'activate'));
 
 OW::getRouter()->addRoute(new OW_Route('owmycookie.admin_help', 'admin/plugins/owmycookie/help', 'OWMYCOOKIE_CTRL_Admin', 'help'));
 
